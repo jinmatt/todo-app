@@ -4,6 +4,9 @@
  * @author Jinsu Mathew <jinsu.mails@gmail.com>
  */
 
+// Module dependencies
+const mongoose = require(__base + 'db/mongodb');
+
 /**
  * Get todo list
  *
@@ -26,4 +29,21 @@ exports.list = function (req, res) {
     },
   };
   res.json(resObj);
+};
+
+/**
+ * @method mongoTest
+ */
+
+exports.mongoTest = function (req, res) {
+  var Cat = mongoose.model('Cat', { name: String });
+
+  var kitty = new Cat({ name: 'Zildjian' });
+  kitty.save(function (err) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.send('meow');
+    }
+  });
 };

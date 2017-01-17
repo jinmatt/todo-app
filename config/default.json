@@ -1,5 +1,12 @@
 {
   "server": {
     "port": 3000
+  },
+  "db": {
+    "mongodb": {
+      "host": "localhost",
+      "port": 27017,
+      "db": "todo"
+    }
   }
 }
