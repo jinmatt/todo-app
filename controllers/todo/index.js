@@ -5,7 +5,8 @@
  */
 
 // Module dependencies
-const mongoose = require(__base + 'db/mongodb');
+const _todo = require(__base + 'models/todo');
+const Chance = require('chance');
 
 /**
  * Get todo list
@@ -14,36 +15,28 @@ const mongoose = require(__base + 'db/mongodb');
  */
 
 exports.list = function (req, res) {
-  let resObj = {
-    status: true,
-    response: {
-      list: [{
-        todo: 'Create a todo app',
-        done: false,
-      },
-      {
-        todo: 'Connect to Mongodb',
-        done: false,
-      },
-    ],
-    },
-  };
-  res.json(resObj);
+  _todo.getList((err, todos) => {
+    if (err) {
+      return res.json(err);
+    }
+
+    res.json(todos);
+  });
 };
 
 /**
- * @method mongoTest
+ * Scaffold todo db
+ *
+ * @method scaffold
  */
 
-exports.mongoTest = function (req, res) {
-  var Cat = mongoose.model('Cat', { name: String });
-
-  var kitty = new Cat({ name: 'Zildjian' });
-  kitty.save(function (err) {
+exports.scaffold = function (req, res) {
+  let chance = new Chance();
+  _todo.addToList(chance.sentence({ words: 5 }), chance.bool(), (err, todo) => {
     if (err) {
-      res.json(err);
-    } else {
-      res.send('meow');
+      return res.json(err);
     }
+
+    res.json(todo);
   });
 };

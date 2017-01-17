@@ -4,6 +4,6 @@ var todo = require(__base + 'controllers/todo');
 
 /* GET todo list. */
 router.get('/list', todo.list);
-router.get('/mongo', todo.mongoTest);
+router.get('/scaffold', todo.scaffold);
 
 module.exports = router;
