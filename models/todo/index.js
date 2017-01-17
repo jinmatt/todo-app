@@ -10,6 +10,8 @@ const Chance = require('chance');
 const todoSchema = mongoose.Schema({
   todo: String,
   done: Boolean,
+}, {
+  versionKey: false,
 });
 
 const Todo = mongoose.model('Todo', todoSchema);
