@@ -16,6 +16,9 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 /**
  * @method addToList
+ * @param {String} todoItem
+ * @param {Boolean} doneStatus
+ * @param {Function} callback
  */
 exports.addToList = function (todoItem, doneStatus, callback) {
   let todo = new Todo({
@@ -25,9 +28,22 @@ exports.addToList = function (todoItem, doneStatus, callback) {
 
   todo.save(function (err) {
     if (err) {
-      callback(err);
-    } else {
-      callback(err, todo);
+      return callback(err);
     }
+
+    callback(null, todo);
+  });
+};
+
+/**
+ * @method getList
+ */
+exports.getList = function (callback) {
+  Todo.find((err, todos) => {
+    if (err) {
+      return callback(err);
+    }
+
+    callback(null, todos);
   });
 };
